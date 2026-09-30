@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dashboard · Expense Tracker</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+<header class="topbar">
+  <h1>💰 Expense Tracker</h1>
+  <div><span id="userName" class="muted"></span><button id="logoutBtn" class="btn btn-ghost btn-small" type="button">Log out</button></div>
+</header>
+<main class="layout">
+  <section class="card full stats">
+    <div><p class="muted">Total (matching filters)</p><h2 id="total">₹0.00</h2></div>
+    <div><p class="muted">Entries</p><h2 id="count">0</h2></div>
+    <p id="msg" class="msg" role="status" style="margin-left:auto"></p>
+  </section>
+
+  <section class="card">
+    <h3 id="formTitle">Add expense</h3>
+    <form id="expenseForm">
+      <label>Title<input id="title" required maxlength="150"></label>
+      <div class="row2">
+        <label>Amount (₹)<input id="amount" type="number" step="0.01" min="0.01" required></label>
+        <label>Date<input id="date" type="date" required></label>
+      </div>
+      <label>Category<select id="category"></select></label>
+      <label>Note (optional)<input id="note" maxlength="500"></label>
+      <div class="buttons">
+        <button class="btn" id="saveBtn" type="submit">Add expense</button>
+        <button class="btn btn-ghost" id="cancelBtn" type="button" hidden>Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <h3>Categories</h3>
+    <ul id="catList" class="cat-list"></ul>
+    <form id="catForm" class="cat-form">
+      <label>New category<input id="catName" required maxlength="50"></label>
+      <label class="color">Color<input id="catColor" type="color" value="#6366f1"></label>
+      <button class="btn" type="submit">Add</button>
+    </form>
+  </section>
+
+  <section class="card full">
+    <h3>Expenses</h3>
+    <div class="filters">
+      <input id="fSearch" type="search" placeholder="Search title or note" aria-label="Search">
+      <select id="filterCategory" aria-label="Category"></select>
+      <label>From<input id="fFrom" type="date"></label>
+      <label>To<input id="fTo" type="date"></label>
+      <label>Min ₹<input id="fMin" type="number" min="0" step="0.01"></label>
+      <label>Max ₹<input id="fMax" type="number" min="0" step="0.01"></label>
+      <select id="fSort" aria-label="Sort by">
+        <option value="date:desc">Newest first</option>
+        <option value="date:asc">Oldest first</option>
+        <option value="amount:desc">Highest amount</option>
+        <option value="amount:asc">Lowest amount</option>
+        <option value="title:asc">Title A to Z</option>
+      </select>
+      <button id="fClear" class="btn btn-ghost btn-small" type="button">Clear filters</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Details</th><th>Category</th><th class="num">Amount</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p id="empty" class="muted" hidden></p>
+    <div class="pager">
+      <button id="prevBtn" class="btn btn-ghost btn-small" type="button">‹ Prev</button>
+      <span id="pageInfo" class="muted small"></span>
+      <button id="nextBtn" class="btn btn-ghost btn-small" type="button">Next ›</button>
+    </div>
+  </section>
+</main>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body></html>

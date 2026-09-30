@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign up · Expense Tracker</title><link rel="stylesheet" href="css/style.css"></head>
+<body class="auth">
+<main class="card auth-card">
+  <h1>💰 Expense Tracker</h1>
+  <p class="muted">Create your account</p>
+  <form id="form">
+    <label>Name<input type="text" id="name" required maxlength="100" autocomplete="name"></label>
+    <label>Email<input type="email" id="email" required autocomplete="email"></label>
+    <label>Password (8+ characters)<input type="password" id="password" required minlength="8" maxlength="72" autocomplete="new-password"></label>
+    <label>Confirm password<input type="password" id="confirm" required autocomplete="new-password"></label>
+    <p id="msg" class="msg" role="alert"></p>
+    <button class="btn" type="submit">Sign up</button>
+  </form>
+  <p class="muted">Already registered? <a href="login.html">Log in</a></p>
+</main>
+<script src="js/api.js"></script>
+<script>
+  document.getElementById('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('msg');
+    msg.textContent = '';
+    const password = document.getElementById('password').value;
+    if (password !== document.getElementById('confirm').value) { msg.textContent = 'Passwords do not match'; return; }
+    try {
+      await api('api/auth/register', 'POST', {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        password
+      });
+      location.href = 'dashboard.html';
+    } catch (err) { msg.textContent = err.message; }
+  });
+</script>
+</body></html>
